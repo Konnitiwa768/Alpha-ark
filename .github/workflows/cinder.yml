@@ -9,6 +9,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Blender
         run: |
@@ -18,8 +20,12 @@ jobs:
       - name: Run Blender to generate FBX
         run: |
           blender --background --python a.py
-      - name: Upload FBX
-        uses: actions/upload-artifact@v3
-        with:
-          name: cinder_model
-          path: cinder.fbx
+
+      - name: Commit and push cinder.fbx
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git add cinder.fbx
+          git pull --rebase main
+          git commit -m "Add generated cinder.fbx"
+          git push origin HEAD:main
