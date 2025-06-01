@@ -1,0 +1,26 @@
+name: Generate Cinder FBX
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Blender
+        run: |
+          sudo apt update
+          sudo apt install blender -y
+
+      - name: Run Blender to generate FBX
+        run: |
+          blender --background --python scripts/generate_cinder.py
+
+      - name: Upload FBX
+        uses: actions/upload-artifact@v3
+        with:
+          name: cinder_model
+          path: cinder.fbx
