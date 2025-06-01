@@ -16,6 +16,7 @@ jobs:
         run: |
           sudo apt update
           sudo apt install blender -y
+          sudo apt install numpy -y
 
       - name: Run Blender to generate FBX
         run: |
