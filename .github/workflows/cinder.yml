@@ -17,8 +17,7 @@ jobs:
 
       - name: Run Blender to generate FBX
         run: |
-          blender --background --python scripts/generate_cinder.py
-
+          blender --background --python a.py
       - name: Upload FBX
         uses: actions/upload-artifact@v3
         with:
